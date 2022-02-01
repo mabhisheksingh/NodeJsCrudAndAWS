@@ -1,0 +1,105 @@
+//how to read json data from json file in node js express
+
+//get POJO/Model class to save in DB
+const Employee = require('../main/models/Employee');
+const fs = require("fs");//for file operation
+
+//in below way to Read data from file
+
+fs.readFile(path.join( __dirname+ '../../../public/employeeData.json') , "utf8", (err, jsonString) => {
+  if (err) {
+    console.log("Error reading file from disk:", err);
+    return;
+  }
+  try {
+    const customer = JSON.parse(jsonString);
+    for(let i=0;i<3;i++){
+        const empTemp = new Employee({
+            name:customer[i].name,
+            empDep: customer[i].empDep
+        });
+        const a1 = empTemp.save().then((result) => {
+            console.log('then',result)
+        }).catch((err) => {
+            console.log('error')
+        });
+        console.log('saveing data a1 ',a1);
+    }
+    //customer[0].save();
+    console.log("Customer address is:", customer[0]); // => "Customer address is: Infinity Loop Drive"
+  } catch (err) {
+    console.log("Error parsing JSON string:", err);
+  }
+});
+
+
+//aws test 
+
+const myAWSCred = new aws.Config({
+  aws_access_key_id: process.env.AWS_ACCESS_KEY_ID,
+  aws_secret_access_key: process.env.AWS_SECRET_ACCESS_KEY,
+  region: "us-east-2",
+});
+
+myAWSCred.getCredentials(function (err) {
+  if (err) {
+    console.log(err.message);
+    log.error(err.message);
+  } else {
+    console.log("Access key : ", myAWSCred.credentials.accessKeyId);
+    console.log("Access key : ", myAWSCred.credentials.secretAccessKey);
+    //console.log("Access key ", aws.config.AWS_ACCESS_KEY_ID)
+    console.log("myAWSCred 24 Region : ", myAWSCred.region);
+
+    const s3 = new aws.S3({
+      apiVersion: "2006-03-01",
+      region: "us-east-2",
+      // credentials: {
+      //   aws_access_key_id: process.env.AWS_ACCESS_KEY_ID,
+      //   aws_secret_access_key: process.env.AWS_SECRET_ACCESS_KEY,
+      // },
+    });
+    const response = s3
+      .listObjectsV2({
+        Bucket: "abhisheksinghbucket",
+      })
+      .promise();
+  }
+});
+
+
+//s3 bucket working code 
+
+
+aws.config.getCredentials(function (err, cred) {
+  if (err) {
+    console.log("aws- cred error : ", err.message);
+  } else {
+    console.log("aws- cred ", cred);
+  }
+});
+
+const BUCKET = process.env.aws_bucket_name;
+const s3 = new aws.S3();
+
+asyncCall = async () => {
+  //get All data from bucket name
+  let response = await s3.listObjectsV2({ Bucket: BUCKET }).promise();
+  //get all bucket list from AWS
+  let response1 = await s3
+    .listBuckets((err, data) => {
+      if (err) {
+        console.log("err : ", err);
+      } else {
+        console.log("data : ", data);
+      }
+    })
+    .promise();
+
+  console.log(response1);
+  let x = response.Contents.map((item) => item.Key);
+  console.log("response : ", response, " X : ", x);
+  return x;
+};
+console.log("asyncCall ", asyncCall());
+
