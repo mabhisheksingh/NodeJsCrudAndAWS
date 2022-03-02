@@ -15,5 +15,5 @@ class ResponseCode{
     static BAD_GATEWAY = 502;
     static INTERNAL_SERVER_ERROR = 500;
 }
-module.exports = ResponseCode;
+export default  ResponseCode;
 //

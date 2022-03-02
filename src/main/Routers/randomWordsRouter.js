@@ -1,9 +1,10 @@
 "use strict";
-const express = require("express");
-const router = express.Router();
-const randomWords = require("random-words");
-const randomMoviesWords = require("random-movie-names");
-const httpStatusCode = require("../resources/util");
+import express from "express";
+import randomWords from "random-words";
+import randomMoviesWords from "random-movie-names";
+import httpStatusCode from "../resources/util.js";
+const  router = express.Router();
+
 
 let randomWord = "";
 const timeToDie = 7;
@@ -126,4 +127,4 @@ const swap = async (string, position, newChar) => {
 };
 
 router.post("/guessRandomWords", hangmanGame);
-module.exports = router;
+export default  router;

@@ -1,5 +1,6 @@
-const empModel = require("../models/Employee");
-const logger = require("../config/logger");
+
+import  empModel  from "../models/Employee.js";
+import logger  from "../config/logger.js";
 //to print all records of find
 var echoRecords = function (err, log) {
   console.log("Total Records Found:" + log.length);
@@ -10,7 +11,7 @@ var echoRecords = function (err, log) {
   }
 };
 
-exports.getAllEmp = async (req, res) => {
+const getAllEmp = async (req, res) => {
   try {
     console.log("Calling logs : ");
     //START logging in file
@@ -36,7 +37,7 @@ exports.getAllEmp = async (req, res) => {
   }
 };
 
-exports.getEmpById = async (req, res) => {
+const getEmpById = async (req, res) => {
   try {
     console.log("Get EMP by Id : " + req.params.id);
     //try it tomorrow
@@ -49,7 +50,7 @@ exports.getEmpById = async (req, res) => {
   }
 };
 
-exports.saveEmp = async (req, res) => {
+const saveEmp = async (req, res) => {
   try {
     console.log("Post Request for save Emp");
 
@@ -74,7 +75,7 @@ exports.saveEmp = async (req, res) => {
   }
 };
 
-exports.deleteEmpById = async (req, res) => {
+const deleteEmpById = async (req, res) => {
   try {
     console.log("Delete EMP by Id : " + req.params.id);
     let id = req.params.id;
@@ -92,7 +93,7 @@ exports.deleteEmpById = async (req, res) => {
   }
 };
 
-exports.updateEmpById = async (req, res) => {
+const updateEmpById = async (req, res) => {
   try {
     console.log("Update EMP by Id : " + req.params.id);
     //try it tommorow
@@ -115,3 +116,5 @@ exports.updateEmpById = async (req, res) => {
     console.log("Some thing happend wrong in updateEmpById " + error);
   }
 };
+
+export default {getAllEmp,getEmpById,saveEmp,deleteEmpById,updateEmpById}

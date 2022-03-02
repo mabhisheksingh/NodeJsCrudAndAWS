@@ -1,12 +1,14 @@
-const express = require("express");
+import  express from "express";
+import multer from "multer";
+import awsS3Controller from "../controller/awsS3Controller.js";
+import awsS3 from "aws-sdk/clients/s3.js";
+import multerS3 from "multer-s3";
 const router = express.Router();
-const multer = require("multer");
-const awsS3Controller = require("../controller/awsS3Controller");
+
 
 router.get("/getAllS3BucketData", awsS3Controller.getAllS3BucketData);
 
-const awsS3 = require("aws-sdk/clients/s3");
-const multerS3 = require("multer-s3");
+
 let awsS3Object = new awsS3();
 const BUCKET = process.env.aws_bucket_name;
 const multerObject = multer({
@@ -35,4 +37,4 @@ router.post(
 // router.delete('/deleteEmpById/:id',awsS3Controller.deleteEmpById);
 // router.patch('/updateEmpData/:id',awsS3Controller.updateEmpById);
 
-module.exports = router;
+export default router;

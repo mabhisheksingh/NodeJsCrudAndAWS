@@ -1,20 +1,23 @@
-const { createLogger, format, transports } = require('winston');
+import winston from 'winston';
 
-module.exports = createLogger({
+
+winston.createLogger ({
     transports:[
-        new transports.File({
+        new winston.transports.File({
             level: 'debug',
             // Create the log directory if it does not exist
             filename: '../../logs/cruds.log',
-            format:format.combine(
-                format.timestamp({format: 'MMM-DD-YYYY HH:mm:ss'}),
-                format.align(),
-                format.printf(info => `${info.level}: ${[info.timestamp]}: ${info.message}`),
+            format:winston.format.combine(
+                winston.format.timestamp({format: 'MMM-DD-YYYY HH:mm:ss'}),
+                winston.format.align(),
+                winston.format.printf(info => `${info.level}: ${[info.timestamp]}: ${info.message}`),
             )
         }),
-        new transports.Console({
+        new winston.transports.Console({
             level: 'info' //will print all level above silly
         })
     ] 
 })
+
+export default {winston};
 
