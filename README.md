@@ -2,19 +2,37 @@ you need to run app.js it is our main file and its path is
 src/main/app.js
 
 
-### Important code for AWS Lambda
+# Sample source code for AWS-SDK 
 
-require ("dotenv").config ();
-const aws = require ("aws-sdk");
-const fs = require ("fs");
-const archiver = require ("archiver");
-const os = require ('os');
-const userName = os.userInfo().username; 
-const currentWorkingDir = process.cwd();
 
-## updating credentials in aws account 
+## Authors
 
-const **credentials** = new aws.SharedIniFileCredentials ({
+- [@Abhishek Singh](https://github.com/mabhisheksingh)
+
+
+## Basic Liberary required for code
+
+
+```bash
+    require ("dotenv").config ();
+    const aws = require ("aws-sdk");
+    const fs = require ("fs");
+    const archiver = require ("archiver");
+    const os = require ('os');
+    const userName = os.userInfo().username; 
+    const currentWorkingDir = process.cwd();
+```
+
+## Running Tests
+
+To run tests, run the following command
+
+
+
+## updating credentials in aws account
+
+```javascript
+const credentials = new aws.SharedIniFileCredentials ({
 	profile: process.env.PROFILE, 
 	credentialsError: (err) => {
 		console.error(err);
@@ -22,15 +40,17 @@ const **credentials** = new aws.SharedIniFileCredentials ({
 });
 aws.config.credentials = credentials;
 aws.config.update({ region: process.env. REGION});
-
 const lambda= new aws.Lambda ();
+```
+
 
 ## Printing all aws functions
 
+```javascript
 const listFunctions = [];
 let returning = [];
 let indexLambda = 0;
-- const **getALLFunctions1** = (marker) => {
+const getALLFunctions1 = (marker) => {
 	const params = {
 		Marker: marker != undefined ? marker: undefined, 
 	}; 
@@ -57,10 +77,12 @@ let indexLambda = 0;
 	});
 	//return returning;
 };
+```
 
-## Get ALL the layers details this give at max 50 item in one way for more you need to pass a marker
 
-- const **getLayerList** = async () => {
+## Get ALL the layers details this give at max 50 item in one way for more you need to pass a marker(is token type system in which if it is not null then more more function are available)
+```javascript
+const getLayerList = async () => {
 	let ListLayersRequest = { 
 		CompatibleRuntime: process.env.RUNTIME,
 		CompatibleArchitecture: process.env.CompatibleArchitecture.
@@ -69,10 +91,12 @@ let indexLambda = 0;
 	//console.log("layerLists", layerLists);
 	return layerLists;
 }
+```
 
 ## Get ALL the function details this give at max 50 item in one way for more you need to pass a marker
 
-- const **getALLFunctions** = async (marker) => {
+```javascript
+const getALLFunctions = async (marker) => {
 	const params = { 
 		Marker: marker != undefined ? marker : undefined,
 	};
@@ -103,19 +127,21 @@ let indexLambda = 0;
 		return response;
 	} else {};
 };
+```
 
 ## Get a specific function details
-
-- const **getFunction** = async (functionName) => { 
+```javascript
+const getFunction = async (functionName) => { 
 	let functionData = null;
 	let response = await lambda.getFunction({ FunctionName: functionName }).promise()
 						.then ((response) => response.$response);
 	if (response.error) return response.error;
 	else return response.data; 
 };
-
-## Create a specific function details
-- const **createLambda** = (functionName) => {
+```
+## Create a specific function with layers name lambdalayers version 6
+```javascript
+const createLambda = (functionName) => {
 	// Get the passed in Region and Plan Name
 	var where = process.env.PROFILE; //devg account
 	const who = functionName;
@@ -148,9 +174,11 @@ let indexLambda = 0;
 		console.log (error.message);
 	});
 };
+```
 
-## Create a ZIP file 
-- const **createZIP** = (payerName) => {
+## Creating a ZIP file
+```javascript
+const createZIP = (payerName) => {
 	const where = process.env.PROFILE.toLocaleLowerCase(); 
 	const who = payerName.toUpperCase();
 	let whereDir= "";
@@ -181,9 +209,11 @@ let indexLambda = 0;
 	archive.file("C:/Users/" + userName + "/Documents/AWS/Zips/base/package-lock.json", { name: "package-lock.json" });
 	archive.finalize();
 };
+```
 
 ## Check ZIP file exist in a folder or not
-- const **checkLambdaExistOrNot** = (payerName) => { 
+```javascript
+const checkLambdaExistOrNot = (payerName) => { 
 	//checking file exist of or not
 	const where = process.env.PROFILE.toLocaleLowerCase();
 	const who = payerName.toUpperCase();
@@ -195,9 +225,11 @@ let indexLambda = 0;
 		return false;
 	}
 }
+```
 
 ## Upload Lambda ZIP file in S3 bucket
-- const **uploadLambdaZipToS3** = async (payerName) => {
+```javascript
+const uploadLambdaZipToS3 = async (payerName) => {
 	let where = process.env. PROFILE.toLocaleLowerCase(); 
   const who = payerName.toUpperCase();
 
@@ -238,8 +270,11 @@ let indexLambda = 0;
 	const uploadStatus = await s3.upload(uploadParams).promise () .then ((data) => data).catch (err => err)	
 	return uploadStatus;
 }
+```
 
-## Modify the existing Lambda 
+## Modify the existing Lambda
+
+```javascript
 
 const modifyExistingLambda = (LambdaName) => { 
 	// Get the passed in Region and Plan Name
@@ -291,8 +326,15 @@ const modifyExistingLambda = (LambdaName) => {
 		console.log (error, error.stack);
 	});
 }
+```
 
 
+
+
+## Export this  functions to other class 
+
+```javascript
 module.exports = { 
 	createLambda,createZIP,getALLFunctions, getFunction,getLayerList,modifyExistingLambda,uploadLambdaZipToS3
 };
+```
