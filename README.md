@@ -240,7 +240,8 @@ let indexLambda = 0;
 }
 
 ## Modify the existing Lambda 
-- const **modifyExistingLambda** = (LambdaName) => { 
+
+const modifyExistingLambda = (LambdaName) => { 
 	// Get the passed in Region and Plan Name
 	var where = process.env.PROFILE.toLowerCase();
 	const who = LambdaName.toUpperCase();
