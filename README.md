@@ -285,7 +285,6 @@ let indexLambda = 0;
 			console.log (data);
 		}).catch ((error) => { 
 			console.log(error, error.stack);
-		
 		});
 	}).catch ((error) => { 
 		console.log (error, error.stack);
