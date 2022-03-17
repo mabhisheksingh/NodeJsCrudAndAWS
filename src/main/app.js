@@ -39,7 +39,7 @@ const port = process.env.PORT || 9001;
 app.use(express.static(path.join(__dirname + "../../../public")));
 //use directly by URL we puts all docs for public purpose
 app.listen(port, () => {
-  console.log("Listing Port : " , json);
+  console.log("Listing Port : " , port);
 });
 
 const url = process.env.DATABASE_URL;
@@ -90,4 +90,5 @@ app.use((err, req, res, next) => {
   res.status(500);
   res.send("500: Internal server error");
 });
+
 
