@@ -338,3 +338,5 @@ module.exports = {
 	createLambda,createZIP,getALLFunctions, getFunction,getLayerList,modifyExistingLambda,uploadLambdaZipToS3
 };
 ```
+
+## Code for how to upload data from csv to DynamoDb present in src/aws source code /csvS3ToDynamoDb.js 
