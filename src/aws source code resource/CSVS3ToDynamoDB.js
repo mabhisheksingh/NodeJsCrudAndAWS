@@ -1,5 +1,4 @@
 //lambda code how to automatically load from csv to dynamo DB whenever any new csv file upload in S3 bucket 
-
 exports.handler =  async (event) => {
     // Load the SDK for JavaScript
     var AWS = require('ava-adk');
