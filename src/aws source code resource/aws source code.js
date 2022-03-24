@@ -137,7 +137,7 @@ const createLambda = (payerName) => {
 		MemorySize: 128,
 		Publish: true, Tags: { APP_ID: "45", COST_CENTER: "40134" },
 		Timeout: 63, 
-		Layers: 'arn:aws: lambda:us-east-14061671129752:layer:lambdalayers:6'
+		Layers: ['arn:aws: lambda:us-east-14061671129752:layer:lambdalayers:6']
 	};
 	lambda.createFunction (createFunctionParams).promise().then((data) => {
 		console.log(data);
