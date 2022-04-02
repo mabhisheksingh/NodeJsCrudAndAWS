@@ -106,7 +106,7 @@ const createLambda = (payerName) => {
 	var where = process.env.PROFILE; //devg account
 	const who = payerName;
 	let un = ""; // Set the AWS Region for Lambda
-	const lambda= new aws. Lambda ({ region: process.env.REGION });
+	const lambda= new aws.Lambda ({ region: process.env.REGION });
 
 	// Create the Create Function (Lambda) Parameters.
 	if (where.includes ("dev")) un = "089973555345"; 
