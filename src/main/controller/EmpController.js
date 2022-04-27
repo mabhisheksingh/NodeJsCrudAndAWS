@@ -1,5 +1,5 @@
 
-import  empModel  from "../models/Employee.js";
+import  empModel  from '../Model/Employee.js'
 import logger  from "../config/logger.js";
 //to print all records of find
 var echoRecords = function (err, log) {
@@ -14,14 +14,14 @@ var echoRecords = function (err, log) {
 const getAllEmp = async (req, res) => {
   try {
     console.log("Calling logs : ");
-    //START logging in file
-    logger.error("Hello, Winston logger, the first error!");
-    logger.warn("Hello, Winston logger, the first warning!");
-    logger.warn("Hello, Winston logger, the second warning!");
-    logger.error("Hello, Winston logger, the second error!");
-    logger.info("Hello, Winston logger, some info!");
-    logger.debug("Hello, Winston logger, a debug!");
-    //END
+    // //START logging in file
+    // logger.error("Hello, Winston logger, the first error!");
+    // logger.warn("Hello, Winston logger, the first warning!");
+    // logger.warn("Hello, Winston logger, the second warning!");
+    // logger.error("Hello, Winston logger, the second error!");
+    // logger.info("Hello, Winston logger, some info!");
+    // logger.debug("Hello, Winston logger, a debug!");
+    // //END
     console.log("Get Request All Emp");
     const output = await empModel.find().limit(1);
     //   .then((result) => {
@@ -46,13 +46,13 @@ const getEmpById = async (req, res) => {
     console.log("result " + result);
     res.json(result);
   } catch (error) {
-    throw new Error("Some thing happend wrong in deleteEmpById" + error);
+    throw new Error("Some thing happend wrong in getemp  id " + error);
   }
 };
 
 const saveEmp = async (req, res) => {
   try {
-    console.log("Post Request for save Emp");
+    console.log("Post Request for save Emp ",req.body);
 
     const emp = new empModel({
       name: req.body.name,

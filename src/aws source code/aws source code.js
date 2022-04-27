@@ -14,7 +14,7 @@ const credentials = new aws.SharedIniFileCredentials ({
 	},
 });
 aws.config.credentials = credentials;
-aws.config.update({ region: process.env. REGION});
+aws.config.update({ region: process.env.REGION});
 
 const lambda= new aws.Lambda ();
 

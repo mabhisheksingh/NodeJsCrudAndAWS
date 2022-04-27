@@ -24,6 +24,8 @@ import request from "express";
 import randomWordsRouter from '../main/Routers/randomWordsRouter.js';
 
 import { readFile } from 'fs/promises';
+import RedisEmployee from './Routers/RedisEmployee.router.js'
+
 const json = JSON.parse(
   // await readFile(
   //   new URL('../../public/employeeData.json', import.meta.url)
@@ -79,6 +81,7 @@ aws.config.update({
 });
 
 app.use("/awsS3API", awsS3Router);
+app.use('/inMemory',RedisEmployee);
 
 
 //always put this code in last to handle all exception

@@ -3,6 +3,7 @@ const BUCKET = process.env.aws_bucket_name;
 
 
 const getAllS3BucketData = async (req, res) => {
+  
   try {
     console.log("Bucket : ", BUCKET);
    const s3Object = new awsS3.S3();
