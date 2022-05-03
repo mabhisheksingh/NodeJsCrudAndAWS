@@ -6,13 +6,12 @@ import path,{dirname } from "path";
 import { fileURLToPath } from 'url';
 import log from '../main/config/logger.js';
 import awsS3Router from './Routers/awsS3router.js';
-//const express = require("express");
+//const express = require("express")
 //const mongoose = require("mongoose");
 // const empRouter = require("./Routers/EmployeeRouter");
 // const path = require("path");
 // const log = require("../main/config/logger");
 // const awsS3Router = require('./Routers/awsS3router');
-
 //for AWS
 // const aws = require("aws-sdk");
 // const uuid = require("uuid");
@@ -25,6 +24,12 @@ import randomWordsRouter from '../main/Routers/randomWordsRouter.js';
 
 import { readFile } from 'fs/promises';
 import RedisEmployee from './Routers/RedisEmployee.router.js'
+
+//cluster use for threading 
+import cluster from 'cluster';
+import os from 'os';
+ 
+
 
 const json = JSON.parse(
   // await readFile(
@@ -39,10 +44,22 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const port = process.env.PORT || 9001;
 app.use(express.static(path.join(__dirname + "../../../public")));
-//use directly by URL we puts all docs for public purpose
-app.listen(port, () => {
-  console.log("Listing Port : " , port);
-});
+
+//using cluster for multithreading
+if (cluster.isPrimary) {
+  //console.log("Is primary is working " , os.cpus())
+  for (let index = 0; index < os.cpus().length-1 ; index++) {
+    cluster.fork();
+  }
+}else{
+  console.log("Is secondary working ",process.pid)
+  //use directly by URL we puts all docs for public purpose
+  app.listen(port, () => {
+    //console.log("Listing Port : " , port);
+  });
+}
+
+
 
 const url = process.env.DATABASE_URL;
 
@@ -64,14 +81,14 @@ mongoose.connect(url, { useNewUrlParser: true });
 
 const con = mongoose.connection;
 con.on("open", () => {
-  console.log("connected..A");
+  console.log("Mongoose connection opened .. ");
   //console.log(AWS_ACCESS_KEY_ID+" " +AWS_SECRET_ACCESS_KEY)
 });
 app.use(express.json());
 
 app.use("/EMPApi", empRouter);
 
-// //aws
+//aws
 aws.config.update({
   region: process.env.aws_bucket_region,
   credentials: {

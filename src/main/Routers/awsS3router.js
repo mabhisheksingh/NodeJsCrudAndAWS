@@ -11,7 +11,7 @@ router.get("/getAllS3BucketData", awsS3Controller.getAllS3BucketData);
 
 let awsS3Object = new awsS3();
 const BUCKET = process.env.aws_bucket_name;
-const multerObject = multer({
+const multerObject = multer({  
   storage: multerS3({
     s3: awsS3Object,
     bucket: BUCKET,

@@ -22,10 +22,11 @@ const REDIS_KEY = process.env.REDIS_KEY;
 })();
 
 
+
 const getAllEmp = async (req, res) => {
     try {
       const response =( await client.HVALS(REDIS_KEY));
-      console.log("res ",response)
+      console.log("Process id  ",process.pid)
       res.header('Content-Type','application/json');
       res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
       res.status(200).send(response);
@@ -37,7 +38,6 @@ const getAllEmp = async (req, res) => {
 
 const getEmpByID = async (req, res) => {
   try {
-    
     let id = req.query.emp_id;
     const response = await client.HKEYS(REDIS_KEY);
     if (response.includes(id)){

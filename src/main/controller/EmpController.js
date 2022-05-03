@@ -13,7 +13,7 @@ var echoRecords = function (err, log) {
 
 const getAllEmp = async (req, res) => {
   try {
-    console.log("Calling logs : ");
+    console.log("Calling logs : ",process.pid);
     // //START logging in file
     // logger.error("Hello, Winston logger, the first error!");
     // logger.warn("Hello, Winston logger, the first warning!");
@@ -23,14 +23,14 @@ const getAllEmp = async (req, res) => {
     // logger.debug("Hello, Winston logger, a debug!");
     // //END
     console.log("Get Request All Emp");
-    const output = await empModel.find().limit(1);
+    const output = await empModel.find().limit(50);
     //   .then((result) => {
     //     console.log("Then " + result);
     //   })
     //   .catch((err) => {
     //     console.log("Error ", err);
     //   });
-    console.log("output : " + output);
+    //console.log("output : " + output);
     res.json(output);
   } catch (error) {
     res.send(error);
