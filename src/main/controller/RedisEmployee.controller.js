@@ -2,10 +2,10 @@ import 'dotenv/config'
 import EmployeeModel from '../Model/Employee.model.js'
 import { readFile } from 'fs/promises';
 import { v4 as uuidv4 } from 'uuid';
-
 import { createClient } from 'redis';
 const client = createClient();
 const REDIS_KEY = process.env.REDIS_KEY;
+
 (async () => {
   
   client.on('error', (err) => console.log('Redis Client Error', err));
@@ -53,6 +53,7 @@ const getEmpByID = async (req, res) => {
   }
 };
 
+
 const saveEmp = async (req, res) => {
   try {
     
@@ -86,7 +87,6 @@ const saveEmp = async (req, res) => {
     res.status(500).send(error);
   }
 };
-
 
 const delEmp = async (req,res) => {
   try {

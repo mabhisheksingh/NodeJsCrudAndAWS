@@ -45,19 +45,23 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const port = process.env.PORT || 9001;
 app.use(express.static(path.join(__dirname + "../../../public")));
 
+app.listen(port, () => {
+  //console.log("Listing Port : " , port);
+});
+
 //using cluster for multithreading
-if (cluster.isPrimary) {
-  //console.log("Is primary is working " , os.cpus())
-  for (let index = 0; index < os.cpus().length-1 ; index++) {
-    cluster.fork();
-  }
-}else{
-  console.log("Is secondary working ",process.pid)
-  //use directly by URL we puts all docs for public purpose
-  app.listen(port, () => {
-    //console.log("Listing Port : " , port);
-  });
-}
+// if (cluster.isPrimary) {
+//   //console.log("Is primary is working " , os.cpus())
+//   for (let index = 0; index < os.cpus().length-1 ; index++) {
+//     cluster.fork();
+//   }
+// }else{
+//   console.log("Is secondary working ",process.pid)
+//   //use directly by URL we puts all docs for public purpose
+//   app.listen(port, () => {
+//     //console.log("Listing Port : " , port);
+//   });
+// }
 
 
 

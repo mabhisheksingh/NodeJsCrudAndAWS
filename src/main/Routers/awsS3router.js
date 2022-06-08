@@ -7,6 +7,7 @@ const router = express.Router();
 
 
 router.get("/getAllS3BucketData", awsS3Controller.getAllS3BucketData);
+router.get("/putDataInDynamoDb", awsS3Controller.putDataInDynamoDb);
 
 
 let awsS3Object = new awsS3();
