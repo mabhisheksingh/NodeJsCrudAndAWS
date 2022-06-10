@@ -10,7 +10,7 @@ src/main/app.js
 - [@Abhishek Singh](https://github.com/mabhisheksingh)
 
 
-## Basic Liberary required for code
+## Basic Library required for code
 
 
 ```bash
@@ -46,6 +46,7 @@ const lambda= new aws.Lambda ();
 
 ## Printing all aws functions
 
+###Method :1
 ```javascript
 const listFunctions = [];
 let returning = [];
@@ -79,6 +80,15 @@ const getALLFunctions1 = (marker) => {
 };
 ```
 
+###Method:2
+```
+const Lambda = require('aws-sdk/clients/lambda');
+const getLambdaList = async ()=>{
+	const lambda = new Lambda({region:'us-east-1'});
+	let getList = await lambda.listFunctions().promise().then(d => d).catch(e =>e);
+	console.log(getList); //print All lambda present in this region
+}
+```
 
 ## Get ALL the layers details this give at max 50 item in one way for more you need to pass a marker(is token type system in which if it is not null then more more function are available)
 ```javascript
